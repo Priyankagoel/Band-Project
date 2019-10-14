@@ -16,21 +16,25 @@
             </div>
         </div>
         <div class="row">
+                <% for(var band of bands) { %>
+                    
+                    
             <div class="col-md-8">
-                <% for(var band of bands) { %>
                     <li> <%= band.name %> </li>
-                    <% } %>
             </div>
             <div class="col-md-2">
-                <% for(var band of bands) { %>
+                
                     <li> <%= band.type %> </li>
-                    <% } %>
+                 
             </div>
             <div class="col-md-2">
-                <i class="fa fa-pencil" aria-hidden="true"></i>
-                <i class="fa fa-trash" aria-hidden="true"></i>
+                <a href='/band/edit/<%= band.id %>'><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <form  action="/band/delete/<%= band.id %>" method="POST">
+                     
+                     <button type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </form>
             </div>
-
+            <% } %>
         </div>
 
     </div>

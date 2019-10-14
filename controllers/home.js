@@ -31,7 +31,8 @@ exports.bandAdded = async (req, res) => {
 
   band = await Band.findOne({
     where: {
-      name: body.bandname
+      name: body.bandname,
+      userId: req.session.user.id
     }
   });
 
@@ -55,4 +56,44 @@ exports.bandAdded = async (req, res) => {
 
 };
 
+exports.editBand = (req, res, next) => {
+  try {
+     Band.findOne({
+      where : {
+        id: req.params.id
+      }
+
+    }).then(band=> {
+      console.log("band.....",JSON.stringify(band, null, 4));
+      return res.render("pages/editBand",{band:band})});
+  
+  } catch (err) {
+    console.log(err);
+  }
+  
+};  
+
+exports.updateBand = (req, res, next) => {
+
+Band.update({ name:  req.body.bandname, type: req.body.bandtype }, {
+  where: {
+  id: req.params.id
+  }
+}).then(() => {
+  return res.redirect("/home");
+});
+  
+}; 
+
+exports.deleteBand = (req, res, next) => {
+
+Band.destroy({
+  where: {
+  id: req.params.id
+  }
+}).then(() => {
+  return res.redirect("/home");
+});
+  
+}; 
 
